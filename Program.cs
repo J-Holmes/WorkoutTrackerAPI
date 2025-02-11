@@ -14,6 +14,17 @@ namespace WorkoutTrackerAPI
             builder.Services.AddDbContext<WorkoutTrackerContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("WorkoutTrackerDatabase")));
 
+            // Add CORS services
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin() // Allow requests from any origin
+                          .AllowAnyMethod()  // Allow any HTTP method (GET, POST, etc.)
+                          .AllowAnyHeader(); // Allow any HTTP headers
+                });
+            });
+
             // Add services to the container.
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
